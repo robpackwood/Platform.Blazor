@@ -1,0 +1,5 @@
+Sample Platform.Blazor app
+
+In order to run change the connection string in the appsettings.json file in the Platform.Blazor project
+
+PREREQ: Install .NET Core SDK 3.1 or newer

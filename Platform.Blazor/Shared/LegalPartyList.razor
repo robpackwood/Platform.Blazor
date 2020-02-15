@@ -1,0 +1,32 @@
+﻿@inherits LegalPartyListBase
+
+<h3>Legal Parties</h3>
+
+@if (LegalPartyAssociations != null)
+{
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Ownership</th>
+        <th>Percent Interest</th>
+        <th>Role Type</th>
+        <th>Party Type</th>
+        <th>Sub-Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var legalPartyAssociation in LegalPartyAssociations)
+      {
+        <tr>
+          <td>@legalPartyAssociation.DisplayName</td>
+          <td>@(legalPartyAssociation.OwnershipType?.Descr ?? string.Empty)</td>
+          <td>@legalPartyAssociation.PercentInterest</td>
+          <td>@(legalPartyAssociation.RoleType?.Descr ?? string.Empty)</td>
+          <td>@(legalPartyAssociation.PartyType?.Descr ?? string.Empty)</td>
+          <td>@(legalPartyAssociation.PartySubType?.Descr ?? string.Empty)</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

@@ -1,0 +1,32 @@
+﻿@inherits TaxBillListBase
+
+<h3>TaxBills</h3>
+
+@if (TaxBillSummaries != null)
+{
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Tax Year</th>
+        <th>Bill Number</th>
+        <th>Roll Caste</th>
+        <th>Roll Type</th>
+        <th>Bill Type</th>
+        <th>Balance Due</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var taxBillSummary in TaxBillSummaries)
+      {
+        <tr>
+          <td>@taxBillSummary.TaxYear</td>
+          <td>@taxBillSummary.BillNumber</td>
+          <td>@(taxBillSummary.RollCaste?.Descr ?? string.Empty)</td>
+          <td>@(taxBillSummary.RollType?.Descr ?? string.Empty)</td>
+          <td>@(taxBillSummary.TaxBillType?.Descr ?? string.Empty)</td>
+          <td>@string.Format("{0:C}", taxBillSummary.BalanceDue)</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

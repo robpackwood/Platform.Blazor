@@ -1,0 +1,6 @@
+﻿@page "/revenueobjectsummary/{RevObjId}"
+@inherits RevenueObjectSummaryBase
+
+<RevenueObjectDetail RevObjId="@RevObjId"></RevenueObjectDetail>
+<LegalPartyList ObjectType="100002" ObjectId="@RevObjId"></LegalPartyList>
+<TaxBillList RevObjId="@RevObjId"></TaxBillList>

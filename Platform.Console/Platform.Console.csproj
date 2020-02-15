@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Platform.Blazor.Api\Platform.Blazor.BR.csproj" />
+    <ProjectReference Include="..\Platform.Blazor.DataAccess\Platform.Blazor.DataAccess.csproj" />
+    <ProjectReference Include="..\Platform.Blazor.Model\Platform.Blazor.Model.csproj" />
+  </ItemGroup>
+
+</Project>

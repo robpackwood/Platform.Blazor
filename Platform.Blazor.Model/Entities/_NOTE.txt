@@ -1,0 +1,5 @@
+﻿Classes in this folder could be generated easily from our DAL based on the model.xml
+
+This is currently hard-coded to use external entities. 
+
+In a real world example, there would be an API exposed by Records to fetch the Records data...

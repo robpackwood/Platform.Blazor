@@ -1,0 +1,13 @@
+﻿Repositories could be specified in the DAL in order to be grouped together. 
+
+For example in model.xml
+  LegalParty 
+  LegalPartyRole
+
+Both tables above could have a new attribute called "LegalPartyRepository"
+
+The repositories could be then generated as partial classes and partial interfaces 
+and read the effective dating type attribute to generate methods to retrieve data by effective date
+and also wire up the CREATE, UPDATE, and DELETE methods to the existing generated stored procs.
+
+Additional methods can then be manually added to the partial class and interface as needed.
