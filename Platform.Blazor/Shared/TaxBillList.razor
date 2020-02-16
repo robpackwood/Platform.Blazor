@@ -1,6 +1,6 @@
 ﻿@inherits TaxBillListBase
 
-<h3>TaxBills</h3>
+<h3>Tax Bills</h3>
 
 @if (TaxBillSummaries != null)
 {
@@ -12,6 +12,8 @@
         <th>Roll Caste</th>
         <th>Roll Type</th>
         <th>Bill Type</th>
+        <th>Total Charges</th>
+        <th>Total Payments</th>
         <th>Balance Due</th>
       </tr>
     </thead>
@@ -24,6 +26,8 @@
           <td>@(taxBillSummary.RollCaste?.Descr ?? string.Empty)</td>
           <td>@(taxBillSummary.RollType?.Descr ?? string.Empty)</td>
           <td>@(taxBillSummary.TaxBillType?.Descr ?? string.Empty)</td>
+          <td>@string.Format("{0:C}", taxBillSummary.TotalCharges)</td>
+          <td>@string.Format("{0:C}", taxBillSummary.TotalPayments)</td>
           <td>@string.Format("{0:C}", taxBillSummary.BalanceDue)</td>
         </tr>
       }

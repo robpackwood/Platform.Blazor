@@ -10,7 +10,6 @@ namespace Platform.Model.Entities
     public int AcctId { get; set; }
     public int TagId { get; set; }
     public int DateGroupId { get; set; }
-    public int TbtType { get; set; }
     public DateTime TranDate { get; set; }
     public int RollCaste { get; set; }
     public int RollType { get; set; }

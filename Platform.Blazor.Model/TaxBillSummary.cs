@@ -17,6 +17,8 @@ namespace Platform.Model
     public SysType RollType { get; set; }
     public SysType TaxType { get; set; }
     public SysType AsmtType { get; set; }
+    public decimal TotalCharges { get; set; }
+    public decimal TotalPayments { get; set; }
     public decimal BalanceDue { get; set; }
   }
 }

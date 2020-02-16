@@ -9,10 +9,10 @@
       <tr>
         <th>Name</th>
         <th>Ownership</th>
+        <th>Primary</th>
         <th>Percent Interest</th>
         <th>Role Type</th>
         <th>Party Type</th>
-        <th>Sub-Type</th>
       </tr>
     </thead>
     <tbody>
@@ -21,10 +21,10 @@
         <tr>
           <td>@legalPartyAssociation.DisplayName</td>
           <td>@(legalPartyAssociation.OwnershipType?.Descr ?? string.Empty)</td>
+          <td>@(legalPartyAssociation.IsPrimary ? "Yes" : "No")</td>
           <td>@legalPartyAssociation.PercentInterest</td>
           <td>@(legalPartyAssociation.RoleType?.Descr ?? string.Empty)</td>
           <td>@(legalPartyAssociation.PartyType?.Descr ?? string.Empty)</td>
-          <td>@(legalPartyAssociation.PartySubType?.Descr ?? string.Empty)</td>
         </tr>
       }
     </tbody>

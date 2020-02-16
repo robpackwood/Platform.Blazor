@@ -12,7 +12,7 @@ namespace Platform.BR
       string pin, DateTime effectiveDate, bool includeInactive = true );
 
     Task<List<RevenueObject>> GetRevenueObjects(
-      DateTime effectiveDate, int maxCount = 10, bool includeInactive = true );
+      DateTime effectiveDate, int maxCount = 100, bool includeInactive = true );
 
     Task<RevenueObject> GetRevenueObjectById( int id, DateTime effectiveDate );
   }
@@ -38,7 +38,7 @@ namespace Platform.BR
     }
 
     public async Task<List<RevenueObject>> GetRevenueObjects(
-      DateTime effectiveDate, int maxCount = 10, bool includeInactive = true )
+      DateTime effectiveDate, int maxCount = 100, bool includeInactive = true )
     {
       return await _revenueObjectRepository.GetRevenueObjects( effectiveDate, maxCount, includeInactive );
     }
