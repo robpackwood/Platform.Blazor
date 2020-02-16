@@ -9,8 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platform.Blazor.Model\Platform.Model.csproj" />
     <ProjectReference Include="..\Platform.Common\Platform.Common.csproj" />
+    <ProjectReference Include="..\Platform.Model\Platform.Model.csproj" />
   </ItemGroup>
 
 </Project>
