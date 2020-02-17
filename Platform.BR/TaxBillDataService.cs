@@ -7,8 +7,7 @@ namespace Platform.BR
 {
   public interface ITaxBillDataService
   {
-    Task<List<TaxBillSummary>> GetRevenueObjectTaxBillSummaries( 
-      int revObjId, bool populateFinancialAmounts = true );
+    Task<List<TaxBillSummary>> GetRevenueObjectTaxBillSummaries( int revObjId );
   }
 
   public class TaxBillDataService : ITaxBillDataService
@@ -20,10 +19,9 @@ namespace Platform.BR
       _taxBillRepository = taxBillRepository;
     }
 
-    public Task<List<TaxBillSummary>> GetRevenueObjectTaxBillSummaries( 
-      int revObjId, bool populateFinancialAmounts = true )
+    public Task<List<TaxBillSummary>> GetRevenueObjectTaxBillSummaries( int revObjId )
     {
-      return _taxBillRepository.GetRevenueObjectTaxBillSummaries( revObjId, populateFinancialAmounts );
+      return _taxBillRepository.GetRevenueObjectTaxBillSummaries( revObjId );
     }
   }
 }

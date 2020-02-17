@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -9,8 +10,7 @@ namespace Platform.DataAccess
 {
   public interface ITaxBillRepository
   {
-    Task<List<TaxBillSummary>> GetRevenueObjectTaxBillSummaries(
-      int revObjId, bool populateFinancialAmounts = true );
+    Task<List<TaxBillSummary>> GetRevenueObjectTaxBillSummaries( int revObjId );
   }
 
   public class TaxBillRepository : ITaxBillRepository
@@ -22,14 +22,26 @@ namespace Platform.DataAccess
       _dc = dc;
     }
 
-    public async Task<List<TaxBillSummary>> GetRevenueObjectTaxBillSummaries(
-      int revObjId, bool populateFinancialAmounts = true )
+    public async Task<List<TaxBillSummary>> GetRevenueObjectTaxBillSummaries( int revObjId )
     {
       IQueryable<TaxBillSummary> taxBillSummaryQuery =
         from taxBillTran in _dc.TaxBillTrans
         join taxBill in _dc.TaxBills
           on taxBillTran.TaxBillId equals taxBill.Id
+        let fnclAmount = (
+          from fnclDetailTot in _dc.FnclDetailTots
+          where fnclDetailTot.TaxBillId == taxBillTran.TaxBillId
+          group fnclDetailTot
+            by fnclDetailTot.TaxBillId
+          into taxBillGroup
+          select new
+          {
+            TotalCharges = taxBillGroup.Sum( fd => fd.Cat == 290021 ? fd.Amount : 0 ),
+            TotalPayments = taxBillGroup.Sum( fd => fd.Cat == 290022 ? fd.Amount : 0 )
+          } ).FirstOrDefault()
         where taxBillTran.RevObjId == revObjId &&
+              ( fnclAmount.TotalCharges + fnclAmount.TotalPayments != 0 ||
+                taxBill.TaxYear >= DateTime.Now.Year - 10 ) &&
               taxBillTran.TranDate == (
                 from subTaxBillTran in _dc.TaxBillTrans
                 where subTaxBillTran.TaxBillId == taxBillTran.TaxBillId &&
@@ -51,47 +63,15 @@ namespace Platform.DataAccess
           TaxBillStatus = new SysType {Id = taxBill.Status},
           TaxBillType = new SysType {Id = taxBill.TbType},
           TaxType = new SysType {Id = taxBillTran.TaxType},
-          TaxYear = taxBill.TaxYear
+          TaxYear = taxBill.TaxYear,
+          TotalCharges = fnclAmount.TotalCharges,
+          TotalPayments = fnclAmount.TotalPayments,
+          BalanceDue = fnclAmount.TotalCharges + fnclAmount.TotalPayments
         };
 
       List<TaxBillSummary> taxBillSummaries = await taxBillSummaryQuery.ToListAsync();
       await PopulateSysTypes( taxBillSummaries );
-
-      if ( populateFinancialAmounts )
-      {
-        var taxBillIds = new HashSet<int>( taxBillSummaries.Select( x => x.TaxBillId ) );
-        await PopulateFinancialAmounts( taxBillIds, taxBillSummaries );
-      }
-
       return taxBillSummaries;
-    }
-
-    private async Task PopulateFinancialAmounts( HashSet<int> taxBillIds, List<TaxBillSummary> taxBillSummaries )
-    {
-      var taxBillAmountQuery = from fnclDetailTot in _dc.FnclDetailTots
-        where taxBillIds.Contains( fnclDetailTot.TaxBillId )
-        group fnclDetailTot
-          by fnclDetailTot.TaxBillId
-        into taxBillGroup
-        select new
-        {
-          TaxBillId = taxBillGroup.Key,
-          TotalCharges = taxBillGroup.Sum( x => x.Cat == 290021 ? x.Amount : 0 ),
-          TotalPayments = taxBillGroup.Sum( x => x.Cat == 290022 ? x.Amount : 0 )
-        };
-
-      var taxBillAmounts = await taxBillAmountQuery.ToDictionaryAsync(
-        key => key.TaxBillId, value => new {value.TotalCharges, value.TotalPayments} );
-
-      foreach ( TaxBillSummary taxBillSummary in taxBillSummaries )
-      {
-        if ( taxBillAmounts.TryGetValue( taxBillSummary.TaxBillId, out var taxBillAmount ) )
-        {
-          taxBillSummary.TotalCharges = taxBillAmount.TotalCharges;
-          taxBillSummary.TotalPayments = taxBillAmount.TotalPayments;
-          taxBillSummary.BalanceDue = taxBillSummary.TotalCharges + taxBillSummary.TotalPayments;
-        }
-      }
     }
 
     /// <summary>
