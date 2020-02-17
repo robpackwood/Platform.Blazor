@@ -10,9 +10,6 @@ namespace Platform.DataAccess
 {
   public interface IRevenueObjectRepository
   {
-    Task<RevenueObject> GetRevenueObjectByPin(
-      string pin, DateTime effectiveDate, bool includeInactive = true );
-
     Task<List<RevenueObject>> GetRevenueObjects(
       DateTime effectiveDate, int maxCount = 100, bool includeInactive = true );
 
@@ -43,20 +40,6 @@ namespace Platform.DataAccess
       List<RevenueObject> revenueObjects = await revenueObjectQuery.Take( maxCount ).ToListAsync();
       await PopulateSysTypes( revenueObjects );
       return revenueObjects;
-    }
-
-    public async Task<RevenueObject> GetRevenueObjectByPin(
-      string pin, DateTime effectiveDate, bool includeInactive = true )
-    {
-      IQueryable<RevenueObject> revenueObjectQuery =
-        from revObj in _dc.RevObjs.WithEffDate( effectiveDate )
-        where revObj.Pin == pin &&
-              ( includeInactive || revObj.EffStatus == "A" )
-        let revObjType = _dc.SysTypes.WithMaxEffDate().SingleOrDefault( st => st.Id == revObj.RevObjType )
-        let revObjSubType = _dc.SysTypes.WithMaxEffDate().SingleOrDefault( st => st.Id == revObj.RevObjSubType )
-        select MapRevenueObject( revObj, revObjType, revObjSubType );
-
-      return await revenueObjectQuery.FirstOrDefaultAsync();
     }
 
     public async Task<RevenueObject> GetRevenueObjectById( int id, DateTime effectiveDate )

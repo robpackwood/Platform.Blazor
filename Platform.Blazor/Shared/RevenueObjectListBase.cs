@@ -9,7 +9,7 @@ namespace Platform.Blazor.Shared
 {
   public class RevenueObjectListBase : ComponentBase
   {
-    [Inject]
+    [Inject] 
     private IRevenueObjectDataService RevenueObjectDataService { get; set; }
 
     public List<RevenueObject> RevenueObjects { get; private set; }

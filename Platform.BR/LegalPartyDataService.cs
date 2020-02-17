@@ -24,7 +24,7 @@ namespace Platform.BR
     public async Task<List<LegalPartyAssociation>> GetLegalPartyAssociations(
       int objectType, int objectId, DateTime effectiveDate )
     {
-      return await _legalPartyRepository.GetLegalPartyAssociations( 
+      return await _legalPartyRepository.GetLegalPartyAssociations(
         objectType, objectId, effectiveDate );
     }
   }

@@ -23,8 +23,8 @@ namespace Platform.Blazor
     // visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices( IServiceCollection services )
     {
-      services.AddDbContext<DataContext>( 
-        options => options.UseSqlServer( Configuration.GetConnectionString( "DefaultConnection" ) ), 
+      services.AddDbContext<DataContext>(
+        options => options.UseSqlServer( Configuration.GetConnectionString( "DefaultConnection" ) ),
         ServiceLifetime.Transient );
 
       services.AddScoped<IRevenueObjectRepository, RevenueObjectRepository>();

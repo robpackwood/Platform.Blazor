@@ -1,5 +1,4 @@
-﻿using System;
-using Platform.Model.Entities;
+﻿using Platform.Model.Entities;
 
 namespace Platform.Model
 {

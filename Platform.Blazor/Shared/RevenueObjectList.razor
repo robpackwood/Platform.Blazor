@@ -22,18 +22,18 @@ else
     <tbody>
       @foreach (var revenueObject in RevenueObjects)
       {
-      <tr>
-        <td>@revenueObject.Pin</td>
-        <td>@revenueObject.Ain</td>
-        <td>@(revenueObject.RevObjType?.Descr ?? string.Empty)</td>
-        <td>@(revenueObject.RevObjSubType?.Descr ?? string.Empty)</td>
-        <td>@(revenueObject.EffStatus == "A" ? "Yes" : "No")</td>
-        <td>
-          <a href="@($"revenueobjectsummary/{revenueObject.Id}")" class="btn btn-primary table-btn">
-            View Detail
-          </a>
-        </td>
-      </tr>
+        <tr>
+          <td>@revenueObject.Pin</td>
+          <td>@revenueObject.Ain</td>
+          <td>@(revenueObject.RevObjType?.Descr ?? string.Empty)</td>
+          <td>@(revenueObject.RevObjSubType?.Descr ?? string.Empty)</td>
+          <td>@(revenueObject.EffStatus == "A" ? "Yes" : "No")</td>
+          <td>
+            <a href="@($"revenueobjectsummary/{revenueObject.Id}")" class="btn btn-primary table-btn">
+              View Detail
+            </a>
+          </td>
+        </tr>
       }
     </tbody>
   </table>
