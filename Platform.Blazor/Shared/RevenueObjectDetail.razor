@@ -72,12 +72,15 @@
           </div>
         </div>
 
-        <div class="col-xs-12 col-sm-4">
-          <div class="parcel-map">
-            <Map Zoom="10" Markers="MapMarkers"></Map>
+        @if ((double.TryParse(RevenueObject.XCoord, out double xCoord) && xCoord != 0) ||
+           (double.TryParse(RevenueObject.YCoord, out double yCoord) && yCoord != 0))
+        {
+          <div class="col-xs-12 col-sm-4">
+            <div class="parcel-map">
+              <Map Zoom="10" Markers="MapMarkers"></Map>
+            </div>
           </div>
-        </div>
-
+        }
       </div>
     </div>
   </section>
